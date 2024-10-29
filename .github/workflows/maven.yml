@@ -32,11 +32,14 @@ jobs:
       with:
           host port: 3306
           container port: 3306
-          mysql database: 'world' 
-          mysql user: 'root'
-          mysql password: '1234'
-
+          mysql database: world 
+          mysql user: root
+          mysql password: 1234
     - name: Build with Maven
+      env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/world
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: 1234
       run: mvn -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
       #run: mvn -Dmaven.test.skip=true -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
 
