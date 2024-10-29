@@ -1,0 +1,59 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+     # Docker 이미지 빌드
+    - name: docker image build
+      run: cd doc-app3 && docker build -t kingnuna/doc-app3:v2 .
+
+    # DockerHub 로그인
+    - name: docker login
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    #Docker Hub 이미지 푸시
+    - name: docker Hub push
+      run: docker push kingnuna/doc-app3:v2
+
+    # aws에 접속하여 도커허브에서 이미지 다운받아 실행
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: 54.180.127.89      #aws ip
+        port: 22		#ssh 포트
+        username: ubuntu	#ec2 사용자. aws에서 whoami 명령 실행으로 확인. 명령라인 맨 앞에서 써있음
+        key: ${{ secrets.PRIVATE_KEY }} # pem 키. ec2 생성시 public 키 생성하여 다운로드 받은 ~.pem 파일을 메모장으로 열어 그 안의 모든 내용 복사해서 변수 값으로 등록
+        # 도커 작업
+        script: |
+          sudo docker container stop doc-app3 #컨테이너 종료
+          sudo docker container rm doc-app3  #컨테이너 삭제
+          sudo docker rmi kingnuna/doc-app3:v2  #이미지 삭제
+          sudo docker pull kingnuna/doc-app3:v2 # 이미지 다운로드
+          cd doc-app3
+          sudo docker-compose up
+          #sudo docker run -p 8081:8081 --name aws_app -v /cafeimg:/img kingnuna/repo1:aws_app #실행
+	#-v (컨테이너간 볼륨 공유할수 있게 하드 디스크와 마운트)
+              #-v <디스크디렉토리명>:<도커볼륨명>
+	#application.properties에 location 값은 /img/로 해야함
+
