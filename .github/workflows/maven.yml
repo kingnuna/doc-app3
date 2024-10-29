@@ -52,8 +52,5 @@ jobs:
           sudo docker pull kingnuna/doc-app3:v2 # 이미지 다운로드
           cd doc-app3
           sudo docker-compose up
-          #sudo docker run -p 8081:8081 --name aws_app -v /cafeimg:/img kingnuna/repo1:aws_app #실행
-	#-v (컨테이너간 볼륨 공유할수 있게 하드 디스크와 마운트)
-              #-v <디스크디렉토리명>:<도커볼륨명>
-	#application.properties에 location 값은 /img/로 해야함
+
 
