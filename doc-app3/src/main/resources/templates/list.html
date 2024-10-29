@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>목록</h3>
+<table border="1">
+<tr th:each="b:${list}"> <td th:text="${b.num}"></td><td th:text="${b.name}"></td>
+<td><img th:src="@{'/read-img/' + ${b.path}}" style="width:100px;height:100px"/></td>
+</tr>
+</table>
+</body>
+</html>
