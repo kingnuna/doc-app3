@@ -30,8 +30,8 @@ jobs:
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
-          host port: 3306
-          container port: 3306
+          host port: 3307
+          container port: 3307
           mysql database: 'world' 
           mysql user: 'root'
           mysql password: '1234'
