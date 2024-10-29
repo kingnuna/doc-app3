@@ -32,9 +32,9 @@ jobs:
       with:
           host port: 3306
           container port: 3306
-          mysql database: world 
-          mysql user: root
-          mysql password: 1234
+          mysql database: 'world' 
+          mysql user: 'root'
+          mysql password: '1234'
     - name: Build with Maven
       env:
           SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/world
