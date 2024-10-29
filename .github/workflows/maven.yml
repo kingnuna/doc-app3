@@ -21,6 +21,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -Dmaven.test.skip=true -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
+
      # Docker 이미지 빌드
     - name: docker image build
       run: cd doc-app3 && docker build -t kingnuna/doc-app3:v2 .
