@@ -28,8 +28,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
-      #run: mvn -Dmaven.test.skip=true -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
+      #run: mvn -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
+      run: mvn -Dmaven.test.skip=true -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
 
      # Docker 이미지 빌드
     - name: docker image build
