@@ -38,8 +38,8 @@ jobs:
     - name: Build with Maven
       env:
           SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/world
-          SPRING_DATASOURCE_USERNAME: root
-          SPRING_DATASOURCE_PASSWORD: 1234
+          SPRING_DATASOURCE_USERNAME: 'root'
+          SPRING_DATASOURCE_PASSWORD: '1234'
       run: mvn -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
       #run: mvn -Dmaven.test.skip=true -B package --file doc-app3/pom.xml && cp doc-app3/target/*.war doc-app3
 
