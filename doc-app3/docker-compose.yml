@@ -28,9 +28,10 @@ services:
   application:
     container_name: doc-app3
     restart: on-failure
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: kingnuna/doc-app3:v1
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
     ports:
       - "8081:8081"
     volumes:
